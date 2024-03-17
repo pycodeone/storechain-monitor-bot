@@ -51,6 +51,9 @@ Run the installer
 4. Create cronjob to check node status every 5 mins and auto restart
 5. Modifies  cd /root/storagechainnode-linux/main.sh and change   pm2 to absolute path
 
+
+## That's all 👍
+
 ####  See the restart logs 
 ```bash
 nano /root/storechain_service_monitor/restarts.log
