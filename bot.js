@@ -24,7 +24,9 @@ pm2.list((err, list) => {
     if (offlineProcesses.length > 0) {
         console.log('One or more processes are offline. Restarting...');
 
-        const command = 'cd /root/storagechainnode-linux/ && ./kill_port.sh && pm2 delete all && ./main.sh';
+
+        const command = 'cd /root/storagechainnode-linux/ && ./kill_port.sh && /usr/local/bin/pm2 delete all && ./main.sh';
+
 
         try {
             const output = execSync(command);
