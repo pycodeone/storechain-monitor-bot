@@ -27,15 +27,23 @@ cd  /root
 ```
 
 ### Step 2
-
-Execute this line of code to download the  monitor bot
+Download the monitor installer
 ```bash
-wget -O  https://github.com/pycodeone/storechain-monitor-bot/raw/main/storechain_monitor_installer.sh
+wget https://github.com/pycodeone/storechain-monitor-bot/raw/main/storechain_monitor_installer.sh
+```
+### Step 3
+Set installer to be executable
+```bash
+chmod +x  storechain_monitor_installer.sh
 ```
 
+### Step 4
+Run the installer
+
 ```bash
-npm install pm2 --save
+./storechain_monitor_installer.sh
 ```
+
 ###  Actions that will be performed
 1. Downloads the installer to root director
 2. Creates folder storechain_service_monitor/
