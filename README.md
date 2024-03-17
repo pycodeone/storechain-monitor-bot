@@ -4,13 +4,29 @@ This script is provided as-is without any warranty. Use it at your own risk. The
 ## What problem is this script solving
 One or more of the storechain services gets stopped from time to time and  node owners have to manualy run the official restart command to get the node  backup. This script will monitor the services  automatically and run the  restart if any of the service is not available
 
+
+
+
 ## How to setup
 This solution uses Pm2  Api in javascript code
 
 ### Assumption
-it's assumed you already have he storechain node installed and running normal and pm2 on your server runs only storechain node services. If you have a personal service not storechain, that service all also be restarted.
+it's assumed you already have the storage chain node installed and running normal and pm2 on your server runs only storechain node services. If you have a personal service not storechain, that service all also be restarted.
 #### Tested on
 Ubuntu 12 , Debian 12  with default storage chain setup.
+
+## Before you begin, pay attention to the following
+This script will be executed by cronjob. Cronjobs  will require absolute path for pm2. For this reason, you will need to modify the main.sh  in the following location
+```bash
+nano /root/storagechainnode-linux/main.sh
+```
+when you run the above command, a file with storage config will open up. change  these lines
+
+```bash
+pm2 flush all    --> change this line to   /usr/local/bin/pm2 flush all
+pm2  start ./service-runner.json --> change this line to  /usr/local/bin/pm2  start ./service-runner.json
+```
+Hopfully storage chain team can adopt the absolute path as the default so this step is not required.
 
 ### Step 1
 Install  pm2 globally. This  won't conflict  with your current installation. It's needed by the  Bot. so it's  safe to run
@@ -44,23 +60,28 @@ crontab -e
 ```
 The above command will open the crontab file in your default text editor.
 
-You might get the following response if no crontab file exists. enter 1 in the choose section to use #### nano  editor 
-Select an editor.  To change later, run 'select-editor'.
+You might get the following response if no crontab file exists. enter 1 in the choose section to use nano  editor 
+```
   1. /bin/nano        <---- easiest
   2. /usr/bin/vim.tiny
 
 Choose 1-2 [1]:
-
+```
 
 Add the following line to the crontab file:
 ```bash
-*/5 * * * * /usr/bin/node /root/storechain_service_monitor/bot.js
+*/5 * * * * /usr/bin/node /root/storechain_service_monitor/bot.js >> /root/storechain_service_monitor/runner.log
 ```
 Enter ctrl + x to save the file
+This will check your storage node every 5 mins and auto restart if any service is down.
 
 ####  See the restart logs 
 ```bash
 nano /root/storechain_service_monitor/restarts.log
+```
+####  See the runner logs 
+```bash
+nano /root/storechain_service_monitor/runner.log
 ```
 At this point, your  node will run 100%  and auto restart if it turns red. You don't need to do anything. 
 
