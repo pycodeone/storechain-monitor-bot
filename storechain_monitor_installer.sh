@@ -50,4 +50,6 @@ else
     exit 1
 fi
 
+/usr/local/bin/pm2  save
+
 echo "Setup complete."
