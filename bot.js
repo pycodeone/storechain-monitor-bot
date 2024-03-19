@@ -3,6 +3,7 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 
 const logFilePath = '/root/storechain_service_monitor/restarts.log'; // Change this to the path of your log file
+const logFilePathRunner = '/root/storechain_service_monitor/runner.log'; // Change this to the path of your log file
 
 pm2.list((err, list) => {
     if (err) {
@@ -40,11 +41,20 @@ pm2.list((err, list) => {
             const stats = fs.statSync(logFilePath);
             const fileSizeInBytes = stats.size;
             const fileSizeInMB = fileSizeInBytes / (1024 * 1024);
-
+		
             if (fileSizeInMB > 1) {
                 fs.unlinkSync(logFilePath); // Delete the file if it exceeds 1MB
                 fs.writeFileSync(logFilePath, ''); // Recreate the file
             }
+
+		 const stats_runner = fs.statSync(logFilePathRunner);
+            const fileSizeInBytes_runner = stats_runner.size;
+            const fileSizeInMB_runner = fileSizeInBytes_runner / (1024 * 1024);
+		
+		if (fileSizeInMB_runner > 1) {
+                fs.unlinkSync(logFilePathRunner); // Delete the file if it exceeds 1MB
+                fs.writeFileSync(logFilePathRunner, ''); // Recreate the file
+                }
         } catch (error) {
             console.error(`Error executing command: ${error.message}`);
         }
