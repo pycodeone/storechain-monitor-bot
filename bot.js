@@ -26,7 +26,7 @@ pm2.list((err, list) => {
         console.log('One or more processes are offline. Restarting...');
 
 
-        const command = 'cd /root/storagechainnode-linux/ && ./kill_port.sh && /usr/local/bin/pm2 delete all && ./main.sh';
+        const command = 'chmod +x /root/storagechainnode-linux/restart.sh && /root/storagechainnode-linux/restart.sh';
 
 
         try {
