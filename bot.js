@@ -22,7 +22,7 @@ pm2.list((err, list) => {
         }
     });
 
-    if (offlineProcesses.length > 0) {
+    if (offlineProcesses.length > 0 || list.length < 3) {
         console.log('One or more processes are offline. Restarting...');
 
 
